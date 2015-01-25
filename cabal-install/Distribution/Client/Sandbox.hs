@@ -14,6 +14,7 @@ module Distribution.Client.Sandbox (
     sandboxAddSourceSnapshot,
     sandboxDeleteSource,
     sandboxListSources,
+    sandboxStatus,
     sandboxHcPkg,
     dumpPackageEnvironment,
     withSandboxBinDirOnSearchPath,
@@ -467,6 +468,12 @@ sandboxListSources verbosity _sandboxFlags globalFlags = do
     mapM_ putStrLn refs
     notice verbosity $ "\nTo unregister source dependencies, "
                        ++ "use the 'sandbox delete-source' command."
+
+-- | Entry point for the 'cabal sandbox status' command.
+sandboxStatus :: Verbosity -> GlobalFlags -> IO ()
+sandboxStatus verbosity globalFlags = do
+  (path, _) <- tryLoadSandboxConfig verbosity globalFlags
+  putStrLn $ "Using a sandbox configured at " ++ path
 
 -- | Entry point for the 'cabal sandbox hc-pkg' command. Invokes the @hc-pkg@
 -- tool with provided arguments, restricted to the sandbox.

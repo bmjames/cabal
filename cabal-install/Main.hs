@@ -81,6 +81,7 @@ import Distribution.Client.Sandbox            (sandboxInit
                                               ,sandboxDelete
                                               ,sandboxDeleteSource
                                               ,sandboxListSources
+                                              ,sandboxStatus
                                               ,sandboxHcPkg
                                               ,dumpPackageEnvironment
 
@@ -1069,6 +1070,7 @@ sandboxAction sandboxFlags extraArgs globalFlags = do
               \at least one argument"
         sandboxDeleteSource verbosity extra sandboxFlags globalFlags
     ["list-sources"] -> sandboxListSources verbosity sandboxFlags globalFlags
+    ["status"] -> sandboxStatus verbosity globalFlags
 
     -- More advanced commands.
     ("hc-pkg":extra) -> do
